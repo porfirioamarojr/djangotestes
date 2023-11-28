@@ -1,0 +1,6 @@
+projectKey=begin-testes
+serverUrl=http://labens.dct.ufrn.br/sonarqube
+serverVersion=9.9.1.69595
+dashboardUrl=http://labens.dct.ufrn.br/sonarqube/dashboard?id=begin-testes
+ceTaskId=AYvO7cUsH_siG20TjvFl
+ceTaskUrl=http://labens.dct.ufrn.br/sonarqube/api/ce/task?id=AYvO7cUsH_siG20TjvFl
