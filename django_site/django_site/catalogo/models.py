@@ -3,6 +3,8 @@ from django.urls import reverse
 import uuid
 from django.contrib.auth.models import User
 from datetime import date
+from django.conf import settings
+
 
 class Genre(models.Model):
     """Model representing a book genre."""
