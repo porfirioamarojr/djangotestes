@@ -1,5 +1,4 @@
 import datetime
-
 from django.shortcuts import render
 from catalogo.models import Book, Author, BookInstance, Genre
 from django.views import generic
@@ -81,7 +80,7 @@ class BookDetailView(generic.DetailView):
 #    redirect_field_name = 'redirect_to'
 
 
-@permission_required('catalogo.can_mark_returned')
+@permission_required('catalogo.can_mark_returned', raise_exception=True)
 def renew_book_librarian(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)

@@ -35,7 +35,7 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this book."""
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('book_detail_view', args=[str(self.id)])
 
     def display_genre(self):
         """Create a String for the Genre. This is a required to display genre in Admin."""
@@ -80,13 +80,12 @@ class BookInstance(models.Model):
             return True
         return False
 
-
 class Author(models.Model):
     """Model representing an author."""
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
+    date_of_death = models.DateField('died', null=True, blank=True)
 
     class Meta:
         ordering = ['last_name', 'first_name']
