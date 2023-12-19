@@ -2,6 +2,9 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from catalogo.forms import RenewBookForm
+#from unittest import TestCase
+#import unittest2
+#import catalogo.tests.test_forms
 
 class RenewBookFormTest(TestCase):
     def test_renew_form_date_field_label(self):

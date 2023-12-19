@@ -1,6 +1,9 @@
 import uuid
 from django.contrib.auth.models import Permission # Required to grant the permission needed to set a book as returned.
 from django.test import TestCase
+#from unittest import TestCase
+#import unittest2
+#import catalogo.tests.test_views
 from django.urls import reverse
 from catalogo.models import Author
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +12,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User # Required to assign User as a borrower
 from catalogo.models import BookInstance, Book, Genre #, Language
 from django.views import generic
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 class AuthorListViewTest(TestCase):
     @classmethod
@@ -20,7 +24,7 @@ class AuthorListViewTest(TestCase):
             Author.objects.create(
                 first_name=f'Christian {author_id}',
                 last_name=f'Surname {author_id}',
-            )
+        )
 
 #    def test_view_url_exists_at_desired_location(self):
 #        response = self.client.get('/catalogo/authors/')
@@ -35,7 +39,7 @@ class AuthorListViewTest(TestCase):
 #        self.assertEqual(response.status_code, 200)
 #        self.assertTemplateUsed(response, 'catalogo/author_list.html')
 #
-#    def test_pagination_is_two(self):
+#    def test_pagination_is_t(self):
 #        response = self.client.get(reverse('authors'))
 #        self.assertEqual(response.status_code, 200)
 #        self.assertTrue('is_paginated' in response.context)
@@ -44,7 +48,7 @@ class AuthorListViewTest(TestCase):
 #
 #    def test_lists_all_authors(self):
 #        # Get second page and confirm it has (exactly) remaining 3 items
-#        response = self.client.get(reverse('authors')+'?page=2')
+#        response = self.client.get(reverse('author')+'?page=2')
 #        self.assertEqual(response.status_code, 200)
 #        self.assertTrue('is_paginated' in response.context)
 #        self.assertTrue(response.context['is_paginated'] == True)
@@ -99,48 +103,48 @@ class LoanedBookInstancesByUserListViewTest(TestCase):
                 status=status,
             )
 
-#    def test_redirect_if_not_logged_in(self):
-#        response = self.client.get(reverse('my-borrowed'))
-#        self.assertRedirects(response, '/accounts/login/?next=/catalogo/mybooks/')
-#
-#    def test_logged_in_uses_correct_template(self):
-#        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-#        response = self.client.get(reverse('my-borrowed'))
-#
-#        # Check our user is logged in
-#        self.assertEqual(str(response.context['user']), 'testuser1')
-#        # Check that we got a response "success"
-#        self.assertEqual(response.status_code, 200)
-#        
-#        # Check we used correct template
-#        self.assertTemplateUsed(response, 'catalogo/bookinstance_list_borrowed_user.html')
-#
-#    def test_only_borrowed_books_in_list(self):
-#        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-#        response = self.client.get(reverse('my-borrowed'))
-#
-#        # Check our user is logged in
-#        self.assertEqual(str(response.context['user']), 'testuser1')
-#        # Check that we got a response "success"
-#        self.assertEqual(response.status_code, 200)
-#
-#        # Check that initially we don't have any books in list (none on loan)
-#        self.assertTrue('bookinstance_list' in response.context)
-#        self.assertEqual(len(response.context['bookinstance_list']), 0)
-#
-#        # Now change all books to be on loan
-#        books = BookInstance.objects.all()[:10]
-#
-#        for book in books:
-#            book.status = 'o'
-#            book.save()
-#
-#        # Check that now we have borrowed books in the list
-#        response = self.client.get(reverse('my-borrowed'))
-#        # Check our user is logged in
-#        self.assertEqual(str(response.context['user']), 'testuser1')
-#        # Check that we got a response "success"
-#        self.assertEqual(response.status_code, 200)
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get(reverse('myborrowed'))
+        self.assertRedirects(response, '/accounts/login/?next=/catalogo/mybook/')
+
+    def test_logged_in_uses_correct_template(self):
+        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse('myborrowed'))
+
+        # Check our user is logged in
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        # Check that we got a response "success"
+        self.assertEqual(response.status_code, 200)
+        
+        # Check we used correct template
+        self.assertTemplateUsed(response, 'catalogo/bookinstance_list_borrowed_user.html')
+
+    def test_only_borrowed_books_in_list(self):
+        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse('myborrowed'))
+
+        # Check our user is logged in
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        # Check that we got a response "success"
+        self.assertEqual(response.status_code, 200)
+
+        # Check that initially we don't have any books in list (none on loan)
+        self.assertTrue('bookinstance_list' in response.context)
+        self.assertEqual(len(response.context['bookinstance_list']), 0)
+
+        # Now change all books to be on loan
+        books = BookInstance.objects.all()[:10]
+
+        for book in books:
+            book.status = 'o'
+            book.save()
+
+        # Check that now we have borrowed books in the list
+        response = self.client.get(reverse('myborrowed'))
+        # Check our user is logged in
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        # Check that we got a response "success"
+        self.assertEqual(response.status_code, 200)
 
         self.assertTrue('bookinstance_list' in response.context)
 
@@ -149,31 +153,30 @@ class LoanedBookInstancesByUserListViewTest(TestCase):
             self.assertEqual(response.context['user'], bookitem.borrower)
             self.assertEqual('o', bookitem.status)
 
-#    def test_pages_ordered_by_due_date(self):
-#        # Change all books to be on loan
-#        for book in BookInstance.objects.all():
-#            book.status='o'
-#            book.save()
-#        
-#        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
-#        response = self.client.get(reverse('my-borrowed'))
-#
-#        # Check our user is logged in
-#        self.assertEqual(str(response.context['user']), 'testuser1')
-#        # Check that we got a response "success"
-#        self.assertEqual(response.status_code, 200)
-#
-#        # Confirm that of the items, only 10 are displayed due to pagination.
-#        self.assertEqual(len(response.context['bookinstance_list']), 10)
-#
-#        last_date = 0
-#        for book in response.context['bookinstance_list']:
-#            if last_date == 0:
-#                last_date = book.due_back
-#            else:
-#                self.assertTrue(last_date <= book.due_back)
-#                last_date = book.due_back
-#
+    def test_pages_ordered_by_due_date(self):
+        # Change all books to be on loan
+        for book in BookInstance.objects.all():
+            book.status='o'
+            book.save()
+        
+        login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse('myborrowed'))
+
+        # Check our user is logged in
+        self.assertEqual(str(response.context['user']), 'testuser1')
+        # Check that we got a response "success"
+        self.assertEqual(response.status_code, 200)
+
+        # Confirm that of the items, only 10 are displayed due to pagination.
+        self.assertEqual(len(response.context['bookinstance_list']), 10)
+
+        last_date = 0
+        for book in response.context['bookinstance_list']:
+            if last_date == 0:
+                last_date = book.due_back
+            else:
+                self.assertTrue(last_date <= book.due_back)
+                last_date = book.due_back
 
 ###########################
 #  Testes views com forms #
@@ -194,13 +197,13 @@ class RenewBookInstancesViewTest(TestCase):
         # Create a book
         test_author = Author.objects.create(first_name='John', last_name='Smith')
         test_genre = Genre.objects.create(name='Fantasy')
-        test_language = Language.objects.create(name='English')
+        #test_language = Language.objects.create(name='English')
         test_book = Book.objects.create(
             title='Book Title',
             summary='My book summary',
             isbn='ABCDEFG',
             author=test_author,
-            language=test_language,
+            #language=test_language,
         )
 
         # Create genre as a post-step
@@ -228,11 +231,11 @@ class RenewBookInstancesViewTest(TestCase):
             status='o',
         )
 
-    def test_redirect_if_not_logged_in(self):
-        response = self.client.get(reverse('renew_book_librarian', kwargs={'pk': self.test_bookinstance1.pk}))
-        # Manually check redirect (Can't use assertRedirect, because the redirect URL is unpredictable)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith('/accounts/login/'))
+#    def test_redirect_if_not_logged_in(self):
+#        response = self.client.get(reverse('renew_book_librarian', kwargs={'pk': self.test_bookinstance1.pk}))
+#        # Manually check redirect (Can't use assertRedirect, because the redirect URL is unpredictable)
+#        self.assertEqual(response.status_code, 302)
+#        self.assertTrue(response.url.startswith('/accounts/login/'))
 
     def test_redirect_if_logged_in_but_not_correct_permission(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')

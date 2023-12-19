@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalogo.apps.CatalogoConfig',
+    #'catalogo.apps.CatalogoConfig',
+    #'catalogo.isPrime',
+    'django_mutpy',
+    #'mutpy',
+    #'tests',
+    'catalogo',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+#DJANGO_SETTINGS_MODULE='django_site.settings'
 
 ROOT_URLCONF = 'django_site.urls'
 

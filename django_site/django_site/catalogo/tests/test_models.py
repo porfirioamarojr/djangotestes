@@ -1,5 +1,8 @@
 from django.test import TestCase
 from catalogo.models import Author
+#from unittest import TestCase
+#import unittest2
+#import catalogo.tests.test_models
 
 # Create your tests here.
 class AuthorModelTest(TestCase):
