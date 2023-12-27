@@ -1,0 +1,770 @@
+[*] Start mutation process:
+   - targets: catalogo.forms, catalogo.models, catalogo.views
+   - tests: catalogo.tests
+[*] 25 tests passed:
+   - catalogo.tests.__main__ [0.00005 s]
+   - catalogo.tests.test_forms [0.00394 s]
+   - catalogo.tests.test_isPrime [0.00013 s]
+   - catalogo.tests.test_models [0.00461 s]
+   - catalogo.tests.test_views [12.46916 s]
+[*] Start mutants generation and execution:
+   - [#   1] AOR catalogo.forms: 
+--------------------------------------------------------------------------------
+  13:         if data < datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+- 17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 17:         if data > datetime.date.today() - datetime.timedelta(weeks=4):
+  18:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  19:         
+  20:         
+  21:         return data
+--------------------------------------------------------------------------------
+[12.40401 s] survived
+   - [#   2] AOR catalogo.forms: 
+--------------------------------------------------------------------------------
+  36:         if data < datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+- 40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 40:         if data > datetime.date.today() - datetime.timedelta(weeks=4):
+  41:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  42:         
+  43:         
+  44:         return data
+--------------------------------------------------------------------------------
+[0.00957 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#   3] COI catalogo.forms: 
+--------------------------------------------------------------------------------
+   9:     def clean_due_back(self):
+  10:         data = self.cleaned_data['due_back']
+  11:         
+  12:         
+- 13:         if data < datetime.date.today():
++ 13:         if not (data < datetime.date.today()):
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+  17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[12.49391 s] survived
+   - [#   4] COI catalogo.forms: 
+--------------------------------------------------------------------------------
+  13:         if data < datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+- 17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 17:         if not (data > datetime.date.today() + datetime.timedelta(weeks=4)):
+  18:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  19:         
+  20:         
+  21:         return data
+--------------------------------------------------------------------------------
+[12.81240 s] survived
+   - [#   5] COI catalogo.forms: 
+--------------------------------------------------------------------------------
+  32:     def clean_renewal_date(self):
+  33:         data = self.cleaned_data['renewal_date']
+  34:         
+  35:         
+- 36:         if data < datetime.date.today():
++ 36:         if not (data < datetime.date.today()):
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+  40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[0.00934 s] killed by test_renew_form_date_in_past (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_in_past)
+   - [#   6] COI catalogo.forms: 
+--------------------------------------------------------------------------------
+  36:         if data < datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+- 40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 40:         if not (data > datetime.date.today() + datetime.timedelta(weeks=4)):
+  41:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  42:         
+  43:         
+  44:         return data
+--------------------------------------------------------------------------------
+[0.01078 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#   7] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+   9:     def clean_due_back(self):
+  10:         data = self.cleaned_data['due_back']
+  11:         
+  12:         
+- 13:         if data < datetime.date.today():
++ 13:         if data > datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+  17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[13.08701 s] survived
+   - [#   8] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+   9:     def clean_due_back(self):
+  10:         data = self.cleaned_data['due_back']
+  11:         
+  12:         
+- 13:         if data < datetime.date.today():
++ 13:         if data <= datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+  17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[12.37637 s] survived
+   - [#   9] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  13:         if data < datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+- 17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 17:         if data < datetime.date.today() + datetime.timedelta(weeks=4):
+  18:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  19:         
+  20:         
+  21:         return data
+--------------------------------------------------------------------------------
+[12.31891 s] survived
+   - [#  10] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  13:         if data < datetime.date.today():
+  14:             raise ValidationError(_('Invalid date - renewal in past'))
+  15:         
+  16:         
+- 17:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 17:         if data >= datetime.date.today() + datetime.timedelta(weeks=4):
+  18:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  19:         
+  20:         
+  21:         return data
+--------------------------------------------------------------------------------
+[12.54337 s] survived
+   - [#  11] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  32:     def clean_renewal_date(self):
+  33:         data = self.cleaned_data['renewal_date']
+  34:         
+  35:         
+- 36:         if data < datetime.date.today():
++ 36:         if data > datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+  40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[0.00976 s] killed by test_renew_form_date_in_past (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_in_past)
+   - [#  12] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  32:     def clean_renewal_date(self):
+  33:         data = self.cleaned_data['renewal_date']
+  34:         
+  35:         
+- 36:         if data < datetime.date.today():
++ 36:         if data <= datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+  40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
+--------------------------------------------------------------------------------
+[0.01244 s] killed by test_renew_form_date_today (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_today)
+   - [#  13] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  36:         if data < datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+- 40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 40:         if data < datetime.date.today() + datetime.timedelta(weeks=4):
+  41:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  42:         
+  43:         
+  44:         return data
+--------------------------------------------------------------------------------
+[0.01095 s] killed by test_renew_form_date_today (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_today)
+   - [#  14] ROR catalogo.forms: 
+--------------------------------------------------------------------------------
+  36:         if data < datetime.date.today():
+  37:             raise ValidationError(_('Invalid date - renewal in past'))
+  38:         
+  39:         
+- 40:         if data > datetime.date.today() + datetime.timedelta(weeks=4):
++ 40:         if data >= datetime.date.today() + datetime.timedelta(weeks=4):
+  41:             raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+  42:         
+  43:         
+  44:         return data
+--------------------------------------------------------------------------------
+[0.00967 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  15] COI catalogo.models: 
+--------------------------------------------------------------------------------
+  73:         return f'{self.id} ({self.book.title})'
+  74:     
+  75:     
+  76:     @property
+- 77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
++ 77:     def is_overdue(self):if not ((self.due_back and date.today() > self.due_back)):
+  78:             return True
+  79:         return False
+  80: 
+  81: class Author(models.Model):
+--------------------------------------------------------------------------------
+[0.01260 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  16] DDL catalogo.models: 
+--------------------------------------------------------------------------------
+  72:         '''String for representing the Model object.'''
+  73:         return f'{self.id} ({self.book.title})'
+  74:     
+  75:     
+- 76:     @property
+- 77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
++ 76:     def is_overdue(self):
++ 77:         if (self.due_back and date.today() > self.due_back):
+  78:             return True
+  79:         return False
+  80: 
+  81: class Author(models.Model):
+--------------------------------------------------------------------------------
+[0.01023 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  17] IOD catalogo.models: 
+--------------------------------------------------------------------------------
+   7: class Genre(models.Model):
+   8:     '''Model representing a book genre.'''
+   9:     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
+  10:     
+- 11:     def __str__(self):
+- 12:         '''String for representing the Model object.'''
+- 13:         return self.name
++ 11:     pass
++ 12: 
++ 13: 
+  14: 
+  15: class Book(models.Model):
+  16:     '''Model representing a book (but not a specific copy of a book).'''
+  17:     title = models.CharField(max_length=200)
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  18] IOD catalogo.models: 
+--------------------------------------------------------------------------------
+  26:     
+  27:     
+  28:     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+  29:     
+- 30:     def __str__(self):
+- 31:         '''String for representing the Model object.'''
+- 32:         return self.title
++ 30:     pass
++ 31:     
++ 32:     
+  33:     
+  34:     def get_absolute_url(self):
+  35:         '''Returns the url to access a detail record for this book.'''
+  36:         return reverse('book_detail_view', args=[str(self.id)])
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  19] IOD catalogo.models: 
+--------------------------------------------------------------------------------
+  67:     class Meta:
+  68:         ordering = ['due_back']
+  69:         permissions = (('can_mark_returned', 'Set book as returned'),)
+  70:     
+- 71:     def __str__(self):
+- 72:         '''String for representing the Model object.'''
+- 73:         return f'{self.id} ({self.book.title})'
++ 71:     pass
++ 72:     
++ 73:     
+  74:     
+  75:     
+  76:     @property
+  77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  20] IOD catalogo.models: 
+--------------------------------------------------------------------------------
+  91:     def get_absolute_url(self):
+  92:         '''Returns the url to access a particular author instance.'''
+  93:         return reverse('author-detail', args=[str(self.id)])
+  94:     
+- 95:     def __str__(self):
+- 96:         '''String for representing the Model object.'''
+- 97:         return f'{self.last_name}, {self.first_name}'
++ 95:     pass
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  21] LCR catalogo.models: 
+--------------------------------------------------------------------------------
+  73:         return f'{self.id} ({self.book.title})'
+  74:     
+  75:     
+  76:     @property
+- 77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
++ 77:     def is_overdue(self):if (self.due_back or date.today() > self.due_back):
+  78:             return True
+  79:         return False
+  80: 
+  81: class Author(models.Model):
+--------------------------------------------------------------------------------
+[0.00993 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  22] ROR catalogo.models: 
+--------------------------------------------------------------------------------
+  73:         return f'{self.id} ({self.book.title})'
+  74:     
+  75:     
+  76:     @property
+- 77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
++ 77:     def is_overdue(self):if (self.due_back and date.today() < self.due_back):
+  78:             return True
+  79:         return False
+  80: 
+  81: class Author(models.Model):
+--------------------------------------------------------------------------------
+[0.00961 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  23] ROR catalogo.models: 
+--------------------------------------------------------------------------------
+  73:         return f'{self.id} ({self.book.title})'
+  74:     
+  75:     
+  76:     @property
+- 77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
++ 77:     def is_overdue(self):if (self.due_back and date.today() >= self.due_back):
+  78:             return True
+  79:         return False
+  80: 
+  81: class Author(models.Model):
+--------------------------------------------------------------------------------
+[0.00962 s] killed by test_renew_form_date_max (catalogo.tests.test_forms.RenewBookFormTest.test_renew_form_date_max)
+   - [#  24] SCI catalogo.models: 
+--------------------------------------------------------------------------------
+   8:     '''Model representing a book genre.'''
+   9:     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
+  10:     
+  11:     def __str__(self):
+- 12:         '''String for representing the Model object.'''
+- 13:         return self.name
+- 14: 
++ 12:         super().__str__()
++ 13:         '''String for representing the Model object.'''
++ 14:         return self.name
+  15: class Book(models.Model):
+  16:     '''Model representing a book (but not a specific copy of a book).'''
+  17:     title = models.CharField(max_length=200)
+  18:     
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  25] SCI catalogo.models: 
+--------------------------------------------------------------------------------
+  27:     
+  28:     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+  29:     
+  30:     def __str__(self):
+- 31:         '''String for representing the Model object.'''
+- 32:         return self.title
+- 33:     
++ 31:         super().__str__()
++ 32:         '''String for representing the Model object.'''
++ 33:         return self.title
+  34:     def get_absolute_url(self):
+  35:         '''Returns the url to access a detail record for this book.'''
+  36:         return reverse('book_detail_view', args=[str(self.id)])
+  37:     
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  26] SCI catalogo.models: 
+--------------------------------------------------------------------------------
+  68:         ordering = ['due_back']
+  69:         permissions = (('can_mark_returned', 'Set book as returned'),)
+  70:     
+  71:     def __str__(self):
+- 72:         '''String for representing the Model object.'''
+- 73:         return f'{self.id} ({self.book.title})'
+- 74:     
++ 72:         super().__str__()
++ 73:         '''String for representing the Model object.'''
++ 74:         return f'{self.id} ({self.book.title})'
+  75:     
+  76:     @property
+  77:     def is_overdue(self):if (self.due_back and date.today() > self.due_back):
+  78:             return True
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  27] SCI catalogo.models: 
+--------------------------------------------------------------------------------
+  92:         '''Returns the url to access a particular author instance.'''
+  93:         return reverse('author-detail', args=[str(self.id)])
+  94:     
+  95:     def __str__(self):
+- 96:         '''String for representing the Model object.'''
+- 97:         return f'{self.last_name}, {self.first_name}'
++ 96:         super().__str__()
++ 97:         '''String for representing the Model object.'''
++ 98:         return f'{self.last_name}, {self.first_name}'
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  28] SIR catalogo.models: 
+--------------------------------------------------------------------------------
+  36:         return reverse('book_detail_view', args=[str(self.id)])
+  37:     
+  38:     def display_genre(self):
+  39:         '''Create a String for the Genre. This is a required to display genre in Admin.'''
+- 40:         return ', '.join((genre.name for genre in self.genre.all()[:3]))
++ 40:         return ', '.join((genre.name for genre in self.genre.all()[:]))
+  41:     
+  42:     display_genre.short_description = 'Genre'
+  43: 
+  44: class BookInstance(models.Model):
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  29] AOR catalogo.views: 
+--------------------------------------------------------------------------------
+   31:     
+   32:     num_authors = Author.objects.count()
+   33:     
+   34:     num_visits = request.session.get('num_visits', 0)
+-  35:     request.session['num_visits'] = num_visits + 1
++  35:     request.session['num_visits'] = num_visits - 1
+   36:     
+   37:     context = {\
+   38:         'num_books': num_books, \
+   39:         'num_instances': num_instances, \
+--------------------------------------------------------------------------------
+[0.74872 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  30] AOR catalogo.views: 
+--------------------------------------------------------------------------------
+  101:             return HttpResponseRedirect(reverse('all-borrowed'))
+  102:     else:
+  103:         
+  104:         
+- 105:         proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
++ 105:         proposed_renewal_date = datetime.date.today() - datetime.timedelta(weeks=3)
+  106:         form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+  107:     
+  108:     context = {\
+  109:         'form': form, \
+--------------------------------------------------------------------------------
+[0.78620 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  31] COI catalogo.views: 
+--------------------------------------------------------------------------------
+   85: def renew_book_librarian(request, pk):'''View function for renewing a specific BookInstance by librarian.'''
+   86:     book_instance = get_object_or_404(BookInstance, pk=pk)
+   87:     
+   88:     
+-  89:     if request.method == 'POST':
++  89:     if not (request.method == 'POST'):
+   90:         
+   91:         
+   92:         form = RenewBookForm(request.POST)
+   93:         
+--------------------------------------------------------------------------------
+[0.73044 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  32] COI catalogo.views: 
+--------------------------------------------------------------------------------
+   91:         
+   92:         form = RenewBookForm(request.POST)
+   93:         
+   94:         
+-  95:         if form.is_valid():
++  95:         if not (form.is_valid()):
+   96:             
+   97:             book_instance.due_back = form.cleaned_data['renewal_date']
+   98:             book_instance.save()
+   99:             
+--------------------------------------------------------------------------------
+[0.78786 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  33] DDL catalogo.views: 
+--------------------------------------------------------------------------------
+   80: 
+   81: 
+   82: 
+   83: 
+-  84: @permission_required('catalogo.can_mark_returned', raise_exception=True)
+-  85: def renew_book_librarian(request, pk):'''View function for renewing a specific BookInstance by librarian.'''
++  84: def renew_book_librarian(request, pk):
++  85:     '''View function for renewing a specific BookInstance by librarian.'''
+   86:     book_instance = get_object_or_404(BookInstance, pk=pk)
+   87:     
+   88:     
+   89:     if request.method == 'POST':
+--------------------------------------------------------------------------------
+[0.79391 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  34] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   46:     return render(request, 'index.html', context=context)
+   47: 
+   48: class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+   49:     '''Generic class-based view listing books on loan to current user.'''
+-  50:     model = BookInstance
++  50:     pass
+   51:     template_name = 'catalogo/bookinstance_list_borrowed_user.html'
+   52:     paginate_by = 10
+   53:     
+   54:     def get_queryset(self):
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  35] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   47: 
+   48: class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+   49:     '''Generic class-based view listing books on loan to current user.'''
+   50:     model = BookInstance
+-  51:     template_name = 'catalogo/bookinstance_list_borrowed_user.html'
++  51:     pass
+   52:     paginate_by = 10
+   53:     
+   54:     def get_queryset(self):
+   55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  36] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   48: class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+   49:     '''Generic class-based view listing books on loan to current user.'''
+   50:     model = BookInstance
+   51:     template_name = 'catalogo/bookinstance_list_borrowed_user.html'
+-  52:     paginate_by = 10
++  52:     pass
+   53:     
+   54:     def get_queryset(self):
+   55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+   56: 
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  37] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   54:     def get_queryset(self):
+   55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+   56: 
+   57: class BookListView(generic.ListView):
+-  58:     model = Book
++  58:     pass
+   59:     paginate_by = 2
+   60:     
+   61:     
+   62:     
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  38] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+   56: 
+   57: class BookListView(generic.ListView):
+   58:     model = Book
+-  59:     paginate_by = 2
++  59:     pass
+   60:     
+   61:     
+   62:     
+   63:     
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  39] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+   71:         context['some_data'] = 'This is just some data'
+   72:         return context
+   73: 
+   74: class BookDetailView(generic.DetailView):
+-  75:     model = Book
++  75:     pass
+   76: 
+   77: 
+   78: 
+   79: 
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  40] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  112:     
+  113:     return render(request, 'catalogo/book_renew_librarian.html', context)
+  114: 
+  115: class AuthorCreate(CreateView):
+- 116:     model = Author
++ 116:     pass
+  117:     fields = '__all__'
+  118:     initial = {'date_of_death': '05/01/2018'}
+  119: 
+  120: class AuthorUpdate(UpdateView):
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  41] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  113:     return render(request, 'catalogo/book_renew_librarian.html', context)
+  114: 
+  115: class AuthorCreate(CreateView):
+  116:     model = Author
+- 117:     fields = '__all__'
++ 117:     pass
+  118:     initial = {'date_of_death': '05/01/2018'}
+  119: 
+  120: class AuthorUpdate(UpdateView):
+  121:     model = Author
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  42] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  114: 
+  115: class AuthorCreate(CreateView):
+  116:     model = Author
+  117:     fields = '__all__'
+- 118:     initial = {'date_of_death': '05/01/2018'}
++ 118:     pass
+  119: 
+  120: class AuthorUpdate(UpdateView):
+  121:     model = Author
+  122:     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  43] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  117:     fields = '__all__'
+  118:     initial = {'date_of_death': '05/01/2018'}
+  119: 
+  120: class AuthorUpdate(UpdateView):
+- 121:     model = Author
++ 121:     pass
+  122:     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+  123: 
+  124: class AuthorDelete(DeleteView):
+  125:     model = Author
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  44] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  118:     initial = {'date_of_death': '05/01/2018'}
+  119: 
+  120: class AuthorUpdate(UpdateView):
+  121:     model = Author
+- 122:     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
++ 122:     pass
+  123: 
+  124: class AuthorDelete(DeleteView):
+  125:     model = Author
+  126:     success_url = reverse_lazy('authors')
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  45] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  121:     model = Author
+  122:     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+  123: 
+  124: class AuthorDelete(DeleteView):
+- 125:     model = Author
++ 125:     pass
+  126:     success_url = reverse_lazy('authors')
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  46] IHD catalogo.views: 
+--------------------------------------------------------------------------------
+  122:     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+  123: 
+  124: class AuthorDelete(DeleteView):
+  125:     model = Author
+- 126:     success_url = reverse_lazy('authors')
++ 126:     pass
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  47] IOD catalogo.views: 
+--------------------------------------------------------------------------------
+   50:     model = BookInstance
+   51:     template_name = 'catalogo/bookinstance_list_borrowed_user.html'
+   52:     paginate_by = 10
+   53:     
+-  54:     def get_queryset(self):
+-  55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
++  54:     pass
++  55: 
+   56: 
+   57: class BookListView(generic.ListView):
+   58:     model = Book
+   59:     paginate_by = 2
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  48] IOD catalogo.views: 
+--------------------------------------------------------------------------------
+   63:     
+   64:     
+   65:     
+   66:     
+-  67:     def get_context_data(self, **kwargs):
+-  68:         
+-  69:         context = super(BookListView, self).get_context_data(**kwargs)
+-  70:         
+-  71:         context['some_data'] = 'This is just some data'
+-  72:         return context
++  67:     pass
++  68: 
++  69: 
++  70: 
++  71: 
++  72: 
+   73: 
+   74: class BookDetailView(generic.DetailView):
+   75:     model = Book
+   76: 
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  49] ROR catalogo.views: 
+--------------------------------------------------------------------------------
+   85: def renew_book_librarian(request, pk):'''View function for renewing a specific BookInstance by librarian.'''
+   86:     book_instance = get_object_or_404(BookInstance, pk=pk)
+   87:     
+   88:     
+-  89:     if request.method == 'POST':
++  89:     if request.method != 'POST':
+   90:         
+   91:         
+   92:         form = RenewBookForm(request.POST)
+   93:         
+--------------------------------------------------------------------------------
+[0.84035 s] killed by test_logged_in_uses_correct_template (catalogo.tests.test_views.LoanedBookInstancesByUserListViewTest.test_logged_in_uses_correct_template)
+   - [#  50] SCI catalogo.views: 
+--------------------------------------------------------------------------------
+   51:     template_name = 'catalogo/bookinstance_list_borrowed_user.html'
+   52:     paginate_by = 10
+   53:     
+   54:     def get_queryset(self):
+-  55:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+-  56: 
++  55:         super().get_queryset()
++  56:         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+   57: class BookListView(generic.ListView):
+   58:     model = Book
+   59:     paginate_by = 2
+   60:     
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+   - [#  51] SCI catalogo.views: 
+--------------------------------------------------------------------------------
+   65:     
+   66:     
+   67:     def get_context_data(self, **kwargs):
+   68:         
+-  69:         context = super(BookListView, self).get_context_data(**kwargs)
+-  70:         
+-  71:         context['some_data'] = 'This is just some data'
+-  72:         return context
+-  73: 
++  69:         super().get_context_data(**kwargs)
++  70:         context = super(BookListView, self).get_context_data(**kwargs)
++  71:         
++  72:         context['some_data'] = 'This is just some data'
++  73:         return context
+   74: class BookDetailView(generic.DetailView):
+   75:     model = Book
+   76: 
+   77: 
+--------------------------------------------------------------------------------
+[0.00000 s] incompetent
+[*] Mutation score [107.50924 s]: 72.0%
+   - all: 51
+   - killed: 18 (35.3%)
+   - survived: 7 (13.7%)
+   - incompetent: 26 (51.0%)
+   - timeout: 0 (0.0%)
