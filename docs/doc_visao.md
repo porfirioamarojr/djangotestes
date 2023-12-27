@@ -41,7 +41,7 @@ RF006 - Consultar emprestimo | Depois de realizar o login o usuário deve conseg
 
 Abaixo apresentamos o modelo logico.
 
- <img src="/Library.png">
+ <img src="Library.png">
 
 
 #### Descrição das Entidades
